@@ -1,4 +1,4 @@
-package iam.bestbooks.model;
+package iam.bestbooks.entity;
 
 import com.fasterxml.jackson.annotation.JsonValue;
 
