@@ -2,6 +2,7 @@ package iam.bestbooks.controller;
 
 import iam.bestbooks.entity.Book;
 import iam.bestbooks.service.BookService;
+import org.springframework.data.domain.Page;
 import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.stereotype.Controller;
@@ -15,6 +16,12 @@ public record BookController (BookService bookService){
     @QueryMapping
     public List<Book> allBooks(){
         return bookService.getAllBooks();
+    }
+
+    @QueryMapping
+    public Page<Book> allPaginatedBooks(@Argument int page, @Argument int size) {
+        return bookService
+                .getAllPaginatedBooks(page, size);
     }
 
     @QueryMapping

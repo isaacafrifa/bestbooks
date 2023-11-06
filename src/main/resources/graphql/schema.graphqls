@@ -1,6 +1,7 @@
 type Query {
     allBooks: [Book]
     findBook(id: ID): Book
+    allPaginatedBooks(page: Int, size: Int): [Book]
 }
 
 type Book {
