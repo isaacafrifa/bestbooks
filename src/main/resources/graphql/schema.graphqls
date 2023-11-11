@@ -1,0 +1,49 @@
+# QUERIES
+type Query {
+    getAllBooks(page: Int, size: Int): [Book]!
+    getBook(id: ID): Book
+}
+
+# MUTATIONS
+type Mutation {
+    createBook(bookInput: BookInput): Book!
+}
+
+# BOOKS
+type Book {
+    id: ID!
+    title: String!
+    rating: Rating
+    author: Author
+}
+
+input BookInput {
+    title: String
+    ratingInput: RatingInput
+    authorInput: AuthorInput
+}
+
+# AUTHORS
+type Author {
+    id: ID!
+    firstName: String
+    lastName: String
+    books: [Book]
+}
+
+input AuthorInput {
+    firstName: String!
+    lastName: String!
+}
+
+# RATINGS
+type Rating {
+    star: String
+}
+
+enum RatingInput {
+    NO_STAR,
+    ONE_STAR,
+    TWO_STAR,
+    THREE_STAR
+}
