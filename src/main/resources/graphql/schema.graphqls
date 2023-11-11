@@ -1,9 +1,15 @@
+# QUERIES
 type Query {
-    allBooks: [Book]
-    findBook(id: ID): Book
-    allPaginatedBooks(page: Int, size: Int): [Book]
+    getAllBooks(page: Int, size: Int): [Book]!
+    getBook(id: ID): Book
 }
 
+# MUTATIONS
+type Mutation {
+    createBook(bookInput: BookInput): Book!
+}
+
+# BOOKS
 type Book {
     id: ID!
     title: String!
@@ -11,6 +17,13 @@ type Book {
     author: Author
 }
 
+input BookInput {
+    title: String
+    ratingInput: RatingInput
+    authorInput: AuthorInput
+}
+
+# AUTHORS
 type Author {
     id: ID!
     firstName: String
@@ -18,7 +31,19 @@ type Author {
     books: [Book]
 }
 
+input AuthorInput {
+    firstName: String!
+    lastName: String!
+}
+
+# RATINGS
 type Rating {
-    rating: String
     star: String
+}
+
+enum RatingInput {
+    NO_STAR,
+    ONE_STAR,
+    TWO_STAR,
+    THREE_STAR
 }
