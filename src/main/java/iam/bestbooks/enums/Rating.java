@@ -1,4 +1,4 @@
-package iam.bestbooks.entity;
+package iam.bestbooks.enums;
 
 import com.fasterxml.jackson.annotation.JsonValue;
 
