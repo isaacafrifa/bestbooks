@@ -3,7 +3,7 @@ package iam.bestbooks.util;
 import com.github.javafaker.Faker;
 import iam.bestbooks.entity.Author;
 import iam.bestbooks.entity.Book;
-import iam.bestbooks.entity.Rating;
+import iam.bestbooks.enums.Rating;
 import iam.bestbooks.repository.AuthorRepository;
 import iam.bestbooks.repository.BookRepository;
 import lombok.RequiredArgsConstructor;

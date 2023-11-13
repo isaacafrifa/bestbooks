@@ -1,12 +1,9 @@
 package iam.bestbooks.service;
 
-import iam.bestbooks.dto.AuthorInput;
 import iam.bestbooks.dto.BookInput;
 import iam.bestbooks.dto.RatingInput;
-import iam.bestbooks.entity.Author;
 import iam.bestbooks.entity.Book;
-import iam.bestbooks.entity.Rating;
-import iam.bestbooks.repository.AuthorRepository;
+import iam.bestbooks.enums.Rating;
 import iam.bestbooks.repository.BookRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -16,7 +13,8 @@ import org.springframework.stereotype.Service;
 
 @Service
 public record BookService(BookRepository bookRepository,
-                          AuthorRepository authorRepository) {
+                          AuthorService authorService) {
+    private static final String BOOK_NOT_FOUND = "Book not found";
 
     public Page<Book> getAllPaginatedBooks(int pageNo, int pageSize){
         Pageable paging = PageRequest.of(pageNo, pageSize);
@@ -26,27 +24,46 @@ public record BookService(BookRepository bookRepository,
     public Book getOneBook(Integer bookId){
         return bookRepository.findById(bookId)
                 .orElseThrow(
-                        () -> new RuntimeException("Book not found")
+                        () -> new RuntimeException(BOOK_NOT_FOUND)
                 );
     }
 
     public Book createBook(BookInput bookInput){
-        if (bookInput == null) {
-            throw new IllegalArgumentException("BookInput is null");
-        }
-        AuthorInput authorInput = bookInput.authorInput();
+        // Get ratings from bookInput
         RatingInput ratingInput = bookInput.ratingInput();
-
-        Author author = new Author(null, authorInput.firstName(), authorInput.lastName());
         Rating rating = Rating.valueOf(ratingInput.name());
         // Save author first
-        authorRepository.save(author);
+        var savedAuthor = authorService.addAuthor(bookInput.authorInput());
+
         Book tobeCreated = new Book(
                 null,
                 bookInput.title(),
                 rating,
-                author
+                savedAuthor
         );
         return bookRepository.save(tobeCreated);
+    }
+
+    public Book updateBook(Integer bookId, BookInput bookInput){
+        var bookToUpdate = this.getOneBook(bookId);
+        // Get ratings from bookInput
+        RatingInput ratingInput = bookInput.ratingInput();
+        Rating rating = Rating.valueOf(ratingInput.name());
+        // Update the author object before the book object
+        var updatedAuthor = authorService.updateAuthor(bookToUpdate.getAuthor().getId(), bookInput.authorInput());
+        bookToUpdate.setTitle(bookInput.title());
+        bookToUpdate.setRating(rating);
+        bookToUpdate.setAuthor(updatedAuthor);
+        // Save the object
+        return bookRepository.save(bookToUpdate);
+    }
+
+    public Book deleteBook( Integer bookId){
+        var bookToDelete = bookRepository.findById(bookId)
+                .orElseThrow(
+                        () -> new RuntimeException(BOOK_NOT_FOUND)
+                );
+        bookRepository.delete(bookToDelete);
+        return bookToDelete;
     }
 }

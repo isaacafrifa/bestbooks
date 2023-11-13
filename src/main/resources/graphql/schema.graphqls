@@ -7,6 +7,8 @@ type Query {
 # MUTATIONS
 type Mutation {
     createBook(bookInput: BookInput): Book!
+    updateBook(bookId: ID, bookInput: BookInput): Book!
+    deleteBook(bookId: ID): Book!
 }
 
 # BOOKS

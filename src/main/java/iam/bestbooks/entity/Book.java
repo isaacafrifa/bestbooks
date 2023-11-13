@@ -1,5 +1,6 @@
 package iam.bestbooks.entity;
 
+import iam.bestbooks.enums.Rating;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;

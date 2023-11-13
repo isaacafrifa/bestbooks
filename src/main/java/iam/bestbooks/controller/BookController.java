@@ -29,5 +29,14 @@ public record BookController (BookService bookService){
         return bookService.createBook(bookInput);
     }
 
+    @MutationMapping
+    public Book updateBook(@Argument Integer bookId, @Argument BookInput bookInput){
+        return bookService.updateBook(bookId,bookInput);
+    }
+
+    @MutationMapping
+    public Book deleteBook(@Argument Integer bookId){
+        return bookService.deleteBook(bookId);
+    }
 
 }
