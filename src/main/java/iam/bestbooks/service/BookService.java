@@ -10,7 +10,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 
 @Service
@@ -42,7 +42,7 @@ public record BookService(BookRepository bookRepository,
                 bookInput.title(),
                 rating,
                 bookInput.price(),
-                LocalDateTime.now(),
+                LocalDate.now(),
                 savedAuthor
         );
         return bookRepository.save(tobeCreated);

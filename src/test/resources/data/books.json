@@ -1,0 +1,36 @@
+[
+    {
+      "id": "1",
+      "title": "Arms and the Man",
+      "price": 610.57,
+      "createdOn": "2023-11-14",
+      "author": {
+        "id": "91",
+        "firstName": "Lanora",
+        "lastName": "Veum"
+      }
+    }
+,
+    {
+      "id": "2",
+      "title": "Blood's a Rover",
+      "price": 718.6,
+      "createdOn": "2023-11-14",
+      "author": {
+        "id": "92",
+        "firstName": "Eilene",
+        "lastName": "Goldner"
+      }
+    },
+    {
+      "id": "3",
+      "title": "The Lathe of Heaven",
+      "price": 88.17,
+      "createdOn": "2023-11-14",
+      "author": {
+        "id": "93",
+        "firstName": "Wilhemina",
+        "lastName": "Sauer"
+      }
+    }
+]

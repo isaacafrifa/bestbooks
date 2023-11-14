@@ -66,11 +66,6 @@
             <artifactId>graphql-java-extended-scalars</artifactId>
             <version>20.2</version>
         </dependency>
-        <dependency>
-            <groupId>com.tailrocks.graphql</groupId>
-            <artifactId>graphql-datetime-spring-boot-starter</artifactId>
-            <version>6.0.0</version>
-        </dependency>
     </dependencies>
 
     <build>

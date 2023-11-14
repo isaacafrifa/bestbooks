@@ -1,0 +1,67 @@
+# This file was generated. Do not edit manually.
+
+schema {
+    query: Query
+    mutation: Mutation
+}
+
+" AUTHORS"
+type Author {
+    books: [Book]
+    firstName: String
+    id: ID!
+    lastName: String
+}
+
+" BOOKS"
+type Book {
+    author: Author
+    createdOn: Date
+    id: ID!
+    price: BigDecimal
+    rating: Rating
+    title: String!
+}
+
+" MUTATIONS"
+type Mutation {
+    createBook(bookInput: BookInput): Book!
+    deleteBook(bookId: ID): Book!
+    updateBook(bookId: ID, bookInput: BookInput): Book!
+}
+
+" QUERIES"
+type Query {
+    getAllBooks(page: Int, size: Int): [Book]!
+    getBook(id: ID): Book
+}
+
+" RATINGS"
+type Rating {
+    star: String
+}
+
+enum RatingInput {
+    NO_STAR
+    ONE_STAR
+    THREE_STAR
+    TWO_STAR
+}
+
+"An arbitrary precision signed decimal"
+scalar BigDecimal
+
+"An RFC-3339 compliant Full Date Scalar"
+scalar Date
+
+input AuthorInput {
+    firstName: String!
+    lastName: String!
+}
+
+input BookInput {
+    authorInput: AuthorInput
+    price: BigDecimal
+    ratingInput: RatingInput
+    title: String
+}
