@@ -10,6 +10,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Random;
 import java.util.stream.IntStream;
@@ -42,6 +44,8 @@ public class DataLoader implements CommandLineRunner {
                         null,
                         faker.book().title(),
                         generateRandomRating(),
+                        generateRandomPricing(),
+                        LocalDateTime.now(),
                         authors.get(i - 1) // Get the corresponding author from the list
                 )).toList();
 
@@ -51,5 +55,13 @@ public class DataLoader implements CommandLineRunner {
     private Rating generateRandomRating() {
         Rating[] ratings = Rating.values();
         return ratings[random.nextInt(ratings.length)];
+    }
+
+    private BigDecimal generateRandomPricing() {
+        int scale = 2;
+        int precision = 5; // Total no of digits
+        // Generate a random long within the specified precision
+        long unscaledValue = random.nextInt((int) Math.pow(10, precision));
+        return BigDecimal.valueOf(unscaledValue, scale);
     }
 }

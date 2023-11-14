@@ -10,6 +10,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+
 
 @Service
 public record BookService(BookRepository bookRepository,
@@ -39,6 +41,8 @@ public record BookService(BookRepository bookRepository,
                 null,
                 bookInput.title(),
                 rating,
+                bookInput.price(),
+                LocalDateTime.now(),
                 savedAuthor
         );
         return bookRepository.save(tobeCreated);
@@ -53,6 +57,7 @@ public record BookService(BookRepository bookRepository,
         var updatedAuthor = authorService.updateAuthor(bookToUpdate.getAuthor().getId(), bookInput.authorInput());
         bookToUpdate.setTitle(bookInput.title());
         bookToUpdate.setRating(rating);
+        bookToUpdate.setPrice(bookInput.price());
         bookToUpdate.setAuthor(updatedAuthor);
         // Save the object
         return bookRepository.save(bookToUpdate);

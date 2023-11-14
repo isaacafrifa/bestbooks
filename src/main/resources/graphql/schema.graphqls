@@ -11,16 +11,23 @@ type Mutation {
     deleteBook(bookId: ID): Book!
 }
 
+#SCALARS
+scalar LocalDateTime
+scalar BigDecimal
+
 # BOOKS
 type Book {
     id: ID!
     title: String!
+    price: BigDecimal
+    createdOn: LocalDateTime
     rating: Rating
     author: Author
 }
 
 input BookInput {
     title: String
+    price: BigDecimal
     ratingInput: RatingInput
     authorInput: AuthorInput
 }
