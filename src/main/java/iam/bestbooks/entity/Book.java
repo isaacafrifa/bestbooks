@@ -14,6 +14,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+
 @Entity
 @Table
 @Getter
@@ -27,6 +30,8 @@ public class Book {
     private String title;
     @Enumerated(EnumType.STRING)
     private Rating rating;
+    private BigDecimal price;
+    private LocalDateTime createdOn = LocalDateTime.now();
     @ManyToOne
     private Author author;
 
