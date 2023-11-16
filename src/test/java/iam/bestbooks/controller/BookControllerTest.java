@@ -8,7 +8,6 @@ import iam.bestbooks.repository.BookRepository;
 import iam.bestbooks.service.AuthorService;
 import iam.bestbooks.service.BookService;
 import com.fasterxml.jackson.core.type.TypeReference;
-import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,9 +21,12 @@ import org.springframework.graphql.test.tester.GraphQlTester;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
 @Import({BookService.class, AuthorService.class, GraphQLConfig.class})
@@ -88,9 +90,48 @@ class BookControllerTest {
     }
 
 
+    @Test
+    void itShouldReturnOneBook (){
+        Integer bookId = 1;
+        //language=GraphQl
+        String actualDocument = """
+                query getBook($id: ID){
+                    getBook(id: $id){
+                    id
+                    title
+                    price
+                    createdOn
+                    rating {
+                       star
+                    }
+                    author {
+                        id
+                        firstName
+                        lastName
+                    }
+                  }
+                }
+         """;
+
+        when(bookRepository.findById(bookId)).thenReturn(Optional.ofNullable(books.get(0)));
+
+        graphQlTester.document(actualDocument)
+                .variable("id", bookId)
+                .execute()
+                .path("getBook")
+                .entity(Book.class)
+                .satisfies(
+                        book -> {
+                            assertEquals("Arms and the Man",book.getTitle());
+                            assertEquals(BigDecimal.valueOf(610.57),book.getPrice());
+                            assertEquals("Lanora",book.getAuthor().getFirstName());
+                        }
+                );
+    }
+
+
 
     private void loadBooks() {
-
         TypeReference<List<Book>> typeReference = new TypeReference<>() {
         };
         InputStream inputStream = TypeReference.class.getResourceAsStream("/data/books.json");
