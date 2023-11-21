@@ -11,7 +11,7 @@ public record AuthorService(AuthorRepository authorRepository) {
     public Author findOneAuthor(Integer authorId){
         return authorRepository.findById(authorId)
                 .orElseThrow(
-                        ()-> new RuntimeException("Book not found")
+                        ()-> new RuntimeException("Author not found")
                 );
     }
 
