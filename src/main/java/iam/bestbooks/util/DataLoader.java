@@ -11,7 +11,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Random;
 import java.util.stream.IntStream;
@@ -45,7 +45,7 @@ public class DataLoader implements CommandLineRunner {
                         faker.book().title(),
                         generateRandomRating(),
                         generateRandomPricing(),
-                        LocalDateTime.now(),
+                        LocalDate.now(),
                         authors.get(i - 1) // Get the corresponding author from the list
                 )).toList();
 

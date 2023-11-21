@@ -1,3 +1,7 @@
+#CUSTOM SCALAR TYPES
+scalar Date
+scalar BigDecimal
+
 # QUERIES
 type Query {
     getAllBooks(page: Int, size: Int): [Book]!
@@ -11,16 +15,13 @@ type Mutation {
     deleteBook(bookId: ID): Book!
 }
 
-#SCALARS
-scalar LocalDateTime
-scalar BigDecimal
 
 # BOOKS
 type Book {
     id: ID!
     title: String!
     price: BigDecimal
-    createdOn: LocalDateTime
+    createdOn: Date
     rating: Rating
     author: Author
 }
