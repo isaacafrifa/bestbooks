@@ -4,6 +4,7 @@ import iam.bestbooks.dto.BookInput;
 import iam.bestbooks.dto.RatingInput;
 import iam.bestbooks.entity.Book;
 import iam.bestbooks.enums.Rating;
+import iam.bestbooks.exception.ResourceNotFound;
 import iam.bestbooks.repository.BookRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -26,7 +27,7 @@ public record BookService(BookRepository bookRepository,
     public Book getOneBook(Integer bookId){
         return bookRepository.findById(bookId)
                 .orElseThrow(
-                        () -> new RuntimeException(BOOK_NOT_FOUND)
+                        () -> new ResourceNotFound(BOOK_NOT_FOUND)
                 );
     }
 
@@ -66,7 +67,7 @@ public record BookService(BookRepository bookRepository,
     public Book deleteBook( Integer bookId){
         var bookToDelete = bookRepository.findById(bookId)
                 .orElseThrow(
-                        () -> new RuntimeException(BOOK_NOT_FOUND)
+                        () -> new ResourceNotFound(BOOK_NOT_FOUND)
                 );
         bookRepository.delete(bookToDelete);
         return bookToDelete;

@@ -2,6 +2,7 @@ package iam.bestbooks.service;
 
 import iam.bestbooks.dto.AuthorInput;
 import iam.bestbooks.entity.Author;
+import iam.bestbooks.exception.ResourceNotFound;
 import iam.bestbooks.repository.AuthorRepository;
 import org.springframework.stereotype.Service;
 
@@ -11,7 +12,7 @@ public record AuthorService(AuthorRepository authorRepository) {
     public Author findOneAuthor(Integer authorId){
         return authorRepository.findById(authorId)
                 .orElseThrow(
-                        ()-> new RuntimeException("Author not found")
+                        ()-> new ResourceNotFound("Author not found")
                 );
     }
 
